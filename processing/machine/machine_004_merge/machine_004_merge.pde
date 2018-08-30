@@ -10,21 +10,45 @@ import java.util.ArrayList;
 import org.opencv.core.Mat;
 import controlP5.*;
 import processing.video.*;
+import processing.serial.*;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // USER CONSTANTS
 int L1 = 360;                                 // UI length unit for rendering images
-String path_photo = savePath("test.jpg");     // path for the photo used
+String path_photo = savePath("images/test.jpg");     // path for the photo used
 int c_gray_treshold_init = 104;               // initial value set in control / c for constant 
 int c_polygon_init = 7;                       // initial value set in control
 int c_speed = 3000;
-int horiz1 = 150;                             // size horiz panel
 
+int horiz1 = 150;                             // size horiz panel
+int previz_x = 400;
+int previz_y = 0;
+float c_scale = 4.2; 
+// I/O
+String path_gcode = "gcode/test.nc.txt";               // path of gcode file to read
+// User Constants
+int serialPortNumber = 1;
+// scale of visualization
+
+// Flags
+boolean ok_machine_ready = false;       // gcode script initiated
+boolean ok_machine_busy = false;
+boolean ok_reader_busy = false;
+boolean ok_previz_busy = false;
+
+boolean ok_print_serial_port_list = false;  // print 
+boolean ok_print_serial_port_name = true; 
+boolean ok_print_serial_IN = true;
+boolean ok_print_serial_OUT = false;
+boolean ok_print_pen_coor = true;
+boolean ok_print_pen_state = true;
 boolean ok_print_buffer = false;
+boolean ok_print_debug = true;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SETUP
 void setup() {
   size(1600, 800);
-  background(200);
   init();                    // initialization routine
   update();                  // update routine
 }
@@ -41,7 +65,8 @@ void init() {
   dim_init(1);
   cam_init();
   opencv_init();
-  control_init();
+  serial_init();
+  cp5_init();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UPDATE
@@ -52,6 +77,8 @@ void update() {
   contour_update();
   gcode_save();
   log_print();
+  previz_update();
+  machine_update();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // RENDER

@@ -40,11 +40,11 @@ void keyPressed() {
   case 'b': 
   case 'c': 
   case '9': 
-    go_home(); 
-    break;
-  case '0': 
     set_zero(); 
     break; 
+  case '0': 
+    go_home(); 
+    break;
   case 'd':
   case 'e': 
   case 'f': 
@@ -94,8 +94,6 @@ void keyPressed() {
   case 'X': 
   case 'Y': 
   case 'Z': 
-    previz_init(); 
-    break;
   case '1': 
   case '2': 
   case '3': 

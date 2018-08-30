@@ -32,14 +32,12 @@ void setup() {
   size(1000, 700);
   background(200);
   serial_init();
-  previz_init();
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 // DRAWING LOOP
 void draw() {
   previz_update();
   machine_update();
-  delay(2);            // stability good practice when working with motors
 }
 
 void print_debug(String s) {
