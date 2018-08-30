@@ -18,7 +18,7 @@ String outFile = "GCODE/test.nc.txt";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // INITIALIZATION
-void initFile() {
+void file_init() {
   // INPUT FILE
   img = loadImage("test.jpg");
   // OUPUT FILE
@@ -31,7 +31,7 @@ void printOutputFilePath() {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////
 // INIT DIMENSIONS : output A3, vert, offset, adj
-void initDimensions(int state) {
+void dim_init(int state) {
   if (state == 1) {
     paper_size_x = 280;
     paper_size_y = 200;
@@ -110,7 +110,7 @@ void initDimensions(int state) {
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UPDATE : reset buffer
-void resetBuffer() {
+void buffer_reset() {
   OUTPUT.flush();                          // empty output buffer
   OUTPUT.close();                          // close output buffer
   OUTPUT = createWriter(outFile);
@@ -118,7 +118,7 @@ void resetBuffer() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // COPY PIMAGE : copy pixel by pixel
-void copyPImagePixels(PImage img1, PImage img2) {
+void copy_PImage(PImage img1, PImage img2) {
   img1.loadPixels();                 
   for (int x = 0; x < img1.width; x++) {
     for (int y = 0; y < img1.height; y++) {
@@ -130,7 +130,7 @@ void copyPImagePixels(PImage img1, PImage img2) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // OUTPUT : print dimensions
-void printDimensions() {
+void printlog_dim() {
   println("Original dim: "+img.width+" x "+ img.height + " ratio_xy:"+rapp_xy);
   println("Revised dim: "+img.width+" x "+ img.height + " ratio_xy:"+rapp_xy);
   println("PaperSize: "+paper_size_x+" x "+paper_size_y);
@@ -140,7 +140,7 @@ void printDimensions() {
 } 
 
 // DRAW GRAY RECTANGLE /////////////////////////////////////////////////////////////////////////////////
-void grayRect(int x, int y, int w, int h, int c) {
+void rect_draw(int x, int y, int w, int h, int c) {
   pushMatrix();
   pushStyle();
   noStroke();

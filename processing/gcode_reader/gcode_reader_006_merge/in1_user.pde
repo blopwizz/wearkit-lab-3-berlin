@@ -1,22 +1,3 @@
-//////////////////////////////////////////////////////////////////////////////////////////////////
-// SERIAL EVENT
-void serialEvent(Serial myPort) {
-  serial_received_msg = myPort.readStringUntil('\n');  // reading a message
-  if (serial_received_msg != null) {
-    serial_received_msg = trim(serial_received_msg);
-    if (serial_received_msg.equals("M3S90ok")) {
-      ok_serial_port_init = true;
-      ok_serial_gcode_init = false;
-      initGCode();
-    }
-
-    if (serial_received_msg.equals("ok")) {
-      serial_queued_commands -= 1;
-    }
-    serial_port.clear();
-    println(millis()+ " (" + serial_queued_commands + ") IN  > "+ serial_received_msg);
-  }
-}
 //////////////////////////////////////////////////////////////////////////////////
 // USER EVENT : keyboard, mouse
 void keyPressed() {  
@@ -49,28 +30,23 @@ void keyPressed() {
     break;
   case BACKSPACE:
   case TAB:
-  case ENTER:
+  case ENTER: 
+    ok_machine_drawing = true;
+    initReader();
+    break;
   case RETURN:
   case ESC:
   case DELETE:
   case 'a': 
-    serial_set_speed(1000);
-    break;
   case 'b': 
-    serial_set_speed(3000);
-    break;
   case 'c': 
-    serial_set_speed(3500);
-    break;
   case '9': 
     serial_go_home(); 
     break;
   case '0': 
     serial_set_zero(); 
     break; 
-  case 'd': 
-    serial_move(10, 10);
-    break;
+  case 'd':
   case 'e': 
   case 'f': 
   case 'g': 

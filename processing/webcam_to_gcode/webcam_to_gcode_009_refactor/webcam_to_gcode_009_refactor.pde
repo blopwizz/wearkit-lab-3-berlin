@@ -16,8 +16,9 @@ int L1 = 360;                                 // UI length unit for rendering im
 String path_photo = savePath("test.jpg");     // path for the photo used
 int c_gray_treshold_init = 104;               // initial value set in control / c for constant 
 int c_polygon_init = 7;                       // initial value set in control
-int speed = 3000;
+int c_speed = 3000;
 
+boolean ok_print_buffer = false;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SETUP
 void setup() {
@@ -35,32 +36,32 @@ void draw() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // INIT
 void init() {
-  initFile();
-  initDimensions(1);
-  initCamera();
-  initOpenCV();
-  initControl();
+  file_init();
+  dim_init(1);
+  cam_init();
+  opencv_init();
+  control_init();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UPDATE
 void update() {
-  updateCamera();
-  resetBuffer();
-  updateOpenCV();
-  updateGCodeContours();
-  saveGCode();
-  printLog();
+  cam_update();
+  buffer_reset();
+  opencv_update();
+  contour_update();
+  gcode_save();
+  log_print();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // RENDER
 void render() {
-  grayRect(0, 0, L1, 100, 150);
-  renderCamera(0, 100, L1);
-  renderProcessed(0, 300, L1);
+  rect_draw(0, 0, L1, 100, 150);
+  cam_render(0, 100, L1);
+  threshold_render(0, 300, L1);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-void printLog() {
-  //printLogCameraList();
-  printLogContours();
-  //printDimensions();
+void log_print() {
+  //printlog_camera_list();
+  //printlog_contour();
+  //printlog_dim();
 }

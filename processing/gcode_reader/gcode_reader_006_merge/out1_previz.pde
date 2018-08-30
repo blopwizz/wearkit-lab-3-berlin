@@ -11,24 +11,23 @@ float max_line_y=0;
 int counterLines=0;
 boolean cont=false;
 ///////////////////////////////////////////////////////////////////////////////////////////
-// GCODE READ: string -> render g_code
-void viz_gcode_read(String line) {
+// GCODE READ: string -> gcode previzualisation
+void previz_gcode_read(String line) {
   if (line == null) {
-    ok_reader_new_line = false;
+    ok_reader_reading = false;
   } else {
-    println(line);
     String[] instruction = split(line, ' ');
     switch(instruction[0]) {
     case "G1": 
       pen_render.x = float(instruction[1].substring(1));
       pen_render.y = float(instruction[2].substring(1));
-      viz_gcode_continueDraw(pen_prev_render, pen_render);
+      previz_gcode_continueDraw(pen_prev_render, pen_render);
       pen_prev_render.set(pen_render);
       break;
     case "G0":
       pen_render.x = float(instruction[1].substring(1));
       pen_render.y = float(instruction[2].substring(1));
-      viz_gcode_moveAndDraw(pen_prev_render, pen_render);
+      previz_gcode_moveAndDraw(pen_prev_render, pen_render);
       pen_prev_render.set(pen_render);
     default: 
       break;
@@ -37,36 +36,39 @@ void viz_gcode_read(String line) {
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UPDATE : GLINE
-void viz_gcode_moveAndDraw(PVector p1, PVector p2) { 
+void previz_gcode_moveAndDraw(PVector p1, PVector p2) { 
   pushStyle();
   pushMatrix();
+  translate(100, 100);
   scale(c_scale);
   stroke(180);
   strokeWeight(3);
   line(p1.x, p2.y, p2.x, p2.y);
   popMatrix();
   popStyle();
-  gcode_render_updateLineBoundaries(p1, p2);
+  previz_gcode_updateLineBoundaries(p1, p2);
   counterLines++;
 }
 
-void viz_gcode_continueDraw(PVector p1, PVector p2) { 
+void previz_gcode_continueDraw(PVector p1, PVector p2) { 
   pushStyle();
   pushMatrix();
+  translate(100, 100);
+
   scale(c_scale);
   stroke(0);
   strokeWeight(3);
   line(p1.x, p1.y, p2.x, p2.y);
   popMatrix();
   popStyle();
-  gcode_render_updateLineBoundaries(p1, p2);
+  previz_gcode_updateLineBoundaries(p1, p2);
   counterLines++;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UPDATE LOG:LINE BOUNDARIES : line max and min
-void gcode_render_updateLineBoundaries(PVector p1, PVector p2) {
+void previz_gcode_updateLineBoundaries(PVector p1, PVector p2) {
   if (p1.x< min_line_x) min_line_x=p1.x;
   if (p2.x< min_line_x) min_line_x=p2.x;
   if (p1.x> max_line_x) max_line_x=p1.x;

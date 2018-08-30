@@ -9,12 +9,12 @@ ArrayList<Contour> polygons;
 ArrayList<Line> lines;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // INITIALIZATION
-void initOpenCV() {
+void opencv_init() {
   opencv = new OpenCV(this, img);                          // load image in opencv
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UPDATE OPENCV
-void updateOpenCV() {  
+void opencv_update() {  
   resultImg = createImage(img.width, img.height, RGB);     // create PImage  
   opencv.loadImage(img);                          // load image in opencv
   opencv.gray();                                           // black and white                                                                                     
@@ -34,7 +34,7 @@ void updateOpenCV() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // OUTPUT: RENDER PROCESSED image on screen
-void renderProcessed(int x, int y, int L) {
+void threshold_render(int x, int y, int L) {
   pushMatrix();
   translate(x, y);
   float r = L/((float)dst.width);
