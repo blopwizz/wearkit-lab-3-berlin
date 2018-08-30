@@ -13,22 +13,26 @@ boolean cont=false;
 ///////////////////////////////////////////////////////////////////////////////////////////
 // GCODE READ: string -> render g_code
 void viz_gcode_read(String line) {
-  String[] instruction = split(line, ' ');
-  println(line);
-  switch(instruction[0]) {
-  case "G1": 
-    pen_render.x = float(instruction[1].substring(1));
-    pen_render.y = float(instruction[2].substring(1));
-    viz_gcode_continueDraw(pen_prev_render, pen_render);
-    pen_prev_render.set(pen_render);
-    break;
-  case "G0":
-    pen_render.x = float(instruction[1].substring(1));
-    pen_render.y = float(instruction[2].substring(1));
-    viz_gcode_moveAndDraw(pen_prev_render, pen_render);
-    pen_prev_render.set(pen_render);
-  default: 
-    break;
+  if (line == null) {
+    ok_reader_new_line = false;
+  } else {
+    println(line);
+    String[] instruction = split(line, ' ');
+    switch(instruction[0]) {
+    case "G1": 
+      pen_render.x = float(instruction[1].substring(1));
+      pen_render.y = float(instruction[2].substring(1));
+      viz_gcode_continueDraw(pen_prev_render, pen_render);
+      pen_prev_render.set(pen_render);
+      break;
+    case "G0":
+      pen_render.x = float(instruction[1].substring(1));
+      pen_render.y = float(instruction[2].substring(1));
+      viz_gcode_moveAndDraw(pen_prev_render, pen_render);
+      pen_prev_render.set(pen_render);
+    default: 
+      break;
+    }
   }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,11 +1,11 @@
-// GCODE READER
+// GCODE READER //<>//
 //////////////////////////////////////////////////////////////////////////////////////////
 // LIBRAIRIES
 import processing.serial.*;
 //////////////////////////////////////////////////////////////////////////////////////////
 // VARIABLES
 // I/O
-String path = "test001.nc.txt";               // path of gcode file to read
+String path = "test.nc.txt";               // path of gcode file to read
 
 // User Constants
 float c_scale = 2;                            // scale of visualization
@@ -20,11 +20,8 @@ boolean ok_serial_state_idle = false;       // serial in idle state
 //////////////////////////////////////////////////////////////////////////////////////////
 // SETUP AND INITIALIZATION
 void setup() {
-  size(1400, 700);
+  size(1000, 700);
   background(200);
-  init();
-}
-void init() {
   initReader();
   initSerial();
 }
@@ -36,14 +33,15 @@ void draw() {
 }
 
 void update() {
-  updateReader();
   if (ok_reader_new_line) {
+    updateReader(); 
     viz_gcode_read(line);
-  } else if (!ok_viz_drawing) {
-    printLogContours();
-    ok_viz_drawing = true;
+  } else if (!ok_viz_drawing) {                                // else, if the viz is not declared as finished
+    printLogContours();                                      // print the contours
+    ok_viz_drawing = true;                                   // and state that the viz is finished
   }
-  ok_serial_state_idle = (serial_queued_commands == 0 && ok_serial_gcode_init && ok_serial_port_init);       // flag update
+  ok_serial_state_idle = (ok_serial_port_init && ok_serial_gcode_init&& ok_viz_drawing && serial_queued_commands == 0);       
   if (ok_serial_state_idle) {
+    println(millis() + "hello");
   }
 }

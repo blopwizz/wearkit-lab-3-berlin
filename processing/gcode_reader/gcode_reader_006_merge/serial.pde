@@ -24,6 +24,7 @@ void initGCode() {                            // triggered when port is ready
   send(s_zero_position);
   send(s_feedrate);
   send(s_incremental_programming);
+  ok_serial_gcode_init = true;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 // UPDATE : SEND SERIAL

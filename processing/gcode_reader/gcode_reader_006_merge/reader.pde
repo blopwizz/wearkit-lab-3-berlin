@@ -17,17 +17,17 @@ void initReader() {
 void updateReader() {
   try {
     line = reader.readLine();
-    if (line != null) {
+    ok_reader_new_line = (line!=null);                                           // update flag
+    if (ok_reader_new_line) {
       i_reader++;
     } else {
-      noLoop();
+      ok_reader_new_line = false;
     }
   } 
   catch (IOException e) {
     e.printStackTrace();
     noLoop();
   }
-  ok_reader_new_line = (line!=null);                                           // update flag
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 // UTILS
