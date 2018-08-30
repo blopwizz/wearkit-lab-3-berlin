@@ -1,0 +1,34 @@
+// WEBCAM TO GCODE 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+// Librairies
+import gab.opencv.*;
+import java.util.ArrayList;
+import org.opencv.core.Mat;
+import controlP5.*;
+import processing.video.*;
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Interface dimensions
+int L1 = 360;
+boolean mode_cam = true;
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Setup
+void setup() {
+  size(1400, 700);
+  background(200);
+  if (mode_cam) initInputFile();
+  else initSelectInputFile();
+  initOutputFile();
+  initDimensions();
+  initControl();
+  if (mode_cam) initCamera();
+  initOpenCV();
+  updateOpenCV();
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Draw
+void draw() {
+  if (mode_cam) updateCamera();
+  grayRect(0, 0, L1, 100, 150);
+  if (mode_cam) renderCamera(0, 100, L1);
+  renderProcessed(0, 300, L1);
+}

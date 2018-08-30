@@ -1,0 +1,24 @@
+// GCODE READER
+//////////////////////////////////////////////////////////////////////////////////////////
+// VARIABLES
+String path = "test001.nc.txt";
+boolean f_drawingCompleted = false;
+float c_scale = 2;
+//////////////////////////////////////////////////////////////////////////////////////////
+// SETUP
+void setup() {
+  size(1400, 700);
+  background(200);
+  initReader();
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+// DRAW
+void draw() {  
+  updateReader();
+  if (line!=null) {
+    gcode_interpret(line);
+  } else if (!f_drawingCompleted) {
+    printLogContours();
+    f_drawingCompleted = true;
+  }
+}

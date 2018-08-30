@@ -1,0 +1,72 @@
+// WEBCAM TO GCODE 
+//  
+// 1. File, Dimensions, Camera
+// 2. OpenCV --> GCode Contours
+// 3. Control, Render
+//
+//
+//
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+// LIBRAIRIES
+import gab.opencv.*;
+import java.util.ArrayList;
+import org.opencv.core.Mat;
+import controlP5.*;
+import processing.video.*;
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// USER CONSTANTS
+int L1 = 360;                                 // UI length unit for rendering images
+String path_photo = savePath("test.jpg");     // path for the photo used
+int c_gray_treshold_init = 104;               // initial value set in control / c for constant 
+int c_polygon_init = 7;                       // initial value set in control
+int speed = 3000;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SETUP
+void setup() {
+  size(1000, 700);
+  background(200);
+  init();                    // initialization routine
+  update();                  // update routine
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DRAW LOOP
+void draw() {
+  update();
+  render();
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// INIT
+void init() {
+  initFile();
+  initDimensions(1);
+  initCamera();
+  initOpenCV();
+  initControl();
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// UPDATE
+void update() {
+  updateCamera();
+  resetBuffer();
+  updateOpenCV();
+  updateGCodeContours();
+  saveGCode();
+  printLog();
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// RENDER
+void render() {
+  grayRect(0, 0, L1, 100, 150);
+  renderCamera(0, 100, L1);
+  renderProcessed(0, 300, L1);
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+void printLog() {
+  //printLogCameraList();
+  printLogContours();
+  //printDimensions();
+}
