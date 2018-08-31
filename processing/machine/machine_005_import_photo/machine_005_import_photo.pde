@@ -32,6 +32,8 @@ int serialPortNumber = 1;
 // scale of visualization
 
 // Flags
+boolean ok_import_photo = false;
+
 boolean ok_machine_ready = false;       // gcode script initiated
 boolean ok_machine_busy = false;
 boolean ok_reader_busy = false;
@@ -45,7 +47,7 @@ boolean ok_print_pen_coor = true;
 boolean ok_print_pen_state = true;
 boolean ok_print_buffer = false;
 boolean ok_print_debug = true;
-boolean ok_import_photo = true;
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SETUP
@@ -69,7 +71,6 @@ void init() {
   opencv_init();
   serial_init();
   cp5_init();
-
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UPDATE
