@@ -15,10 +15,11 @@ import processing.serial.*;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // USER CONSTANTS
 int L1 = 360;                                 // UI length unit for rendering images
-String path_photo = savePath("images/joy.jpg");     // path for the photo used
+String path_photo = savePath("images/test.jpg");     // path for the photo used
 int c_gray_treshold_init = 104;               // initial value set in control / c for constant 
 int c_polygon_init = 7;                       // initial value set in control
 int c_speed = 3000;
+
 
 int horiz1 = 150;                             // size horiz panel
 int previz_x = 400;
@@ -68,6 +69,7 @@ void init() {
   opencv_init();
   serial_init();
   cp5_init();
+
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UPDATE
